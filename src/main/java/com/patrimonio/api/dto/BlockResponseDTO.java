@@ -21,10 +21,10 @@ public class BlockResponseDTO {
     public static BlockResponseDTO fromEntity(Block block){
         return new BlockResponseDTO(
             block.getId(),
-            block.getCode(),
-            block.getName(),
-            block.getDescription(),
-            block.getCreatedOn()
+            block.getCodigo(),
+            block.getNome(),
+            block.getDescricao(),
+            block.getCriadoEm()
         );
     }
 }

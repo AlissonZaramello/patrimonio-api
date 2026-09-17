@@ -25,14 +25,14 @@ public class Block {
     private UUID id;
 
     @Column(nullable = false) 
-    private String code;
+    private String codigo;
 
     @Column(nullable = false)
-    private String name; 
+    private String nome; 
     
     @Column
-    private String description;
+    private String descricao;
 
     @Column(name = "criado_em", updatable = false)
-    private LocalDateTime createdOn;
+    private LocalDateTime criadoEm;
 }

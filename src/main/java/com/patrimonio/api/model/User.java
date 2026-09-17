@@ -20,27 +20,27 @@ public class User {
     private UUID id;
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
     @Column(nullable = false)
     private String email;
 
     @Column
-    private String passwordHash;
+    private String senhaHash;
 
     @Column
     private String role;
 
     @Column
-    private boolean active;
+    private boolean ativo;
 
     @Column
-    private UUID createdBy;
+    private UUID criadoPor;
 
     @Column(name = "created_on", updatable = false)
-    private LocalDateTime createdOn;
+    private LocalDateTime criadoEm;
 
     @Column
-    private LocalDateTime updatedOn;
+    private LocalDateTime atualizadoEm;
 
 }

@@ -21,10 +21,10 @@ public class UserResponseDTO {
     public static UserResponseDTO fromEntity(User user){
         return new UserResponseDTO(
             user.getId(),
-            user.getName(),
+            user.getNome(),
             user.getEmail(),
             user.getRole(),
-            user.getCreatedOn()
+            user.getCriadoEm()
         );
     }
 }
