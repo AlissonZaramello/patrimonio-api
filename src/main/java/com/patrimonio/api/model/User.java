@@ -32,7 +32,7 @@ public class User {
     private String role;
 
     @Column
-    private boolean ativo;
+    private Boolean ativo;
 
     @Column
     private UUID criadoPor;
