@@ -37,7 +37,7 @@ public class User {
     @Column
     private UUID criadoPor;
 
-    @Column(name = "created_on", updatable = false)
+    @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
 
     @Column
