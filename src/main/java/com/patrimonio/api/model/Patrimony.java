@@ -8,44 +8,55 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "patrimonio")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+@AllArgsConstructor 
+public class Patrimony {
 
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @Column(nullable = false)
-    private String nome;
+    private String numeroTombo;
+
+    @Column
+    private String descricao;
 
     @Column(nullable = false)
-    private String email;
+    private Long valorAquisicao;
+
+    @Column(nullable = false)
+    private LocalDateTime dataAquisicao;
+
+    @Column(nullable = false)
+    private String estadoConservacao;
 
     @Column
-    private String senhaHash;
+    private String fotoUrl;
 
-    @Column
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "sala_id", nullable = false)
+    private Room room;
+
+    @Column(nullable = false)
+    private UUID tagNfcId;
 
     @Column
     private Boolean ativo;
-
-    @Column
-    private UUID criadoPor;
 
     @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
 
     @Column
     private LocalDateTime atualizadoEm;
-
 }
