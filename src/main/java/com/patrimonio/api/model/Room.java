@@ -31,7 +31,7 @@ public class Room {
     @JoinColumn(name = "bloco_id", nullable = false) 
     private Block bloco; 
 
-    @ManyToMany 
+    @ManyToOne
     @JoinColumn(name = "responsavel_id", nullable = false)
     private User user;
 
