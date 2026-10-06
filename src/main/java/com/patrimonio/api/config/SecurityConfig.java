@@ -39,7 +39,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Login é público; tudo o resto exige token válido
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
@@ -74,8 +73,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        // Ajuste para a URL real do seu frontend em produção
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000"));
+        config.setAllowedOrigins(List.of("https://sicpatrfid.up.railway.app"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
