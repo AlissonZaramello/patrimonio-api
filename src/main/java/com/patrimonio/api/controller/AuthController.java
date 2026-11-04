@@ -39,6 +39,7 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("mensagem", "Se o e-mail estiver cadastrado, você receberá instruções para redefinir sua senha."));
     }
 
+    @PostMapping("/reset-password")
     public ResponseEntity<Map<String, String>> redefinirSenha(@Valid @RequestBody ResetPasswordRequestDTO dto) {
 
         try{

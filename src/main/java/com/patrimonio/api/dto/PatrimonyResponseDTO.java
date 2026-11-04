@@ -1,5 +1,7 @@
 package com.patrimonio.api.dto;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,13 +17,12 @@ public class PatrimonyResponseDTO {
     private UUID id;
     private String numeroTombo;
     private String descricao;
-    private Long valorAquisicao;
-    private LocalDateTime dataAquisicao;
+    private BigDecimal valorAquisicao;
+    private LocalDate dataAquisicao;
     private String estadoConservacao;
     private String fotoUrl;
     private String nomeSala;
     private String nomeBloco;
-    private String nomeResponsavelSala;
     private UUID tagNfcId;
     private Boolean ativo;
     private LocalDateTime criadoEm;
@@ -38,8 +39,7 @@ public class PatrimonyResponseDTO {
             patrimony.getFotoUrl(),
             patrimony.getRoom().getNome(),
             patrimony.getRoom().getBloco().getNome(),
-            patrimony.getRoom().getUser().getNome(),
-            patrimony.getTagNfcId(),
+            patrimony.getTagNfc() != null ? patrimony.getTagNfc().getId() : null,
             patrimony.getAtivo(),
             patrimony.getCriadoEm(),
             patrimony.getAtualizadoEm()

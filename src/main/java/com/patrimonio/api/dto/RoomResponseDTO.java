@@ -14,7 +14,6 @@ public class RoomResponseDTO {
 
     private UUID id;
     private String nomeBloco;
-    private String nomeResponsavel;
     private String codigo;
     private String nome;
     private LocalDateTime criadoEm;
@@ -23,7 +22,6 @@ public class RoomResponseDTO {
         return new RoomResponseDTO(
             room.getId(),
             room.getBloco().getNome(),
-            room.getUser().getNome(),
             room.getCodigo(),
             room.getNome(),
             room.getCriadoEm()

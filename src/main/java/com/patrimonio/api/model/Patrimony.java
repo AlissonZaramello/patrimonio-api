@@ -1,5 +1,7 @@
 package com.patrimonio.api.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,30 +25,31 @@ public class Patrimony {
     @Id 
     private UUID id = UUID.randomUUID();
 
-    @Column(nullable = false)
+    @Column(name = "numero_tombo", nullable = false)
     private String numeroTombo;
 
     @Column
     private String descricao;
 
-    @Column(nullable = false)
-    private Long valorAquisicao;
+    @Column(name = "valor_aquisicao", nullable = false, precision = 12, scale = 2)
+    private BigDecimal valorAquisicao;
 
-    @Column(nullable = false)
-    private LocalDateTime dataAquisicao;
+    @Column(name = "data_aquisicao", nullable = false)
+    private LocalDate dataAquisicao;
 
-    @Column(nullable = false)
+    @Column(name = "estado_conservacao", nullable = false)
     private String estadoConservacao;
 
-    @Column
+    @Column(name = "foto_url")
     private String fotoUrl;
 
     @ManyToOne
     @JoinColumn(name = "sala_id", nullable = false)
     private Room room;
 
-    @Column(nullable = false)
-    private UUID tagNfcId;
+    @ManyToOne
+    @JoinColumn(name = "tag_nfc_id", unique = true) 
+    private TagNfc tagNfc;
 
     @Column
     private Boolean ativo;
@@ -54,6 +57,6 @@ public class Patrimony {
     @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
 
-    @Column
+    @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
 }

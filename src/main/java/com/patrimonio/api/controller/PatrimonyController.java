@@ -1,6 +1,7 @@
 package com.patrimonio.api.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,13 @@ public class PatrimonyController {
     private final PatrimonyService patrimonyService;
 
     @GetMapping
-    public ResponseEntity<List<PatrimonyResponseDTO>> listAll(){
-        return ResponseEntity.ok(patrimonyService.listAll());
+    public ResponseEntity<List<PatrimonyResponseDTO>> listAll(Authentication authentication){
+        
+        boolean administrador = authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN") || authority.getAuthority().equals("ROLE_ADMINISTRADOR"));
+
+        return ResponseEntity.ok(patrimonyService.listAll(authentication.getName(), administrador));
+                
     }
 }
