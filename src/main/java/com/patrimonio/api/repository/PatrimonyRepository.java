@@ -13,4 +13,6 @@ public interface PatrimonyRepository extends JpaRepository<Patrimony, UUID> {
     List<Patrimony> findByAtivo(Boolean ativo);
 
     List<Patrimony> findByRoom_IdIn(Collection<UUID> salaIds);
+
+    List<Patrimony> findByRoom_IdInAndAtivoTrue(Collection<UUID> salaIds);
 }

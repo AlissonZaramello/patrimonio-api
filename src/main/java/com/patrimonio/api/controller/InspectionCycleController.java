@@ -4,6 +4,7 @@ package com.patrimonio.api.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -90,6 +91,16 @@ public class InspectionCycleController {
         verificarAdministrador(authentication);
 
         InspectionCycle ciclo = cicloService.cancelar(id);
+
+        return ResponseEntity.ok(InspectionCycleResponseDTO.fromEntity(ciclo));
+    }
+
+    @PatchMapping("/{id}/ativar")
+    public ResponseEntity<InspectionCycleResponseDTO> ativar(@PathVariable UUID id, Authentication authentication) {
+
+        verificarAdministrador(authentication);
+
+        InspectionCycle ciclo = cicloService.ativar(id);
 
         return ResponseEntity.ok(InspectionCycleResponseDTO.fromEntity(ciclo));
     }
