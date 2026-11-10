@@ -240,8 +240,9 @@ public class InspectionCycleService {
 
             item.setConferencia(conferenciasPorSala.get(salaId));
             item.setPatrimonio(patrimonio);
+            item.setTagNfc(patrimonio.getTagNfc());
             item.setSalaEsperada(patrimonio.getRoom());
-            item.setStatus("PENDENTE");
+            item.setResultado("PENDENTE");
 
             itens.add(item);
         }

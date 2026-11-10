@@ -43,6 +43,10 @@ public class InspectionItem {
     private Inspection conferencia;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_nfc_id")
+    private TagNfc tagNfc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patrimonio_id", nullable = false)
     private Patrimony patrimonio;
 
@@ -54,8 +58,8 @@ public class InspectionItem {
     @JoinColumn(name = "sala_lida_id")
     private Room salaLida;
 
-    @Column(name = "status", nullable = false, length = 20)
-    private String status = "PENDENTE";
+    @Column(name = "resultado", nullable = false, length = 20)
+    private String resultado = "PENDENTE";
 
     @Column(name = "lido_em")
     private LocalDateTime lidoEm;
@@ -65,8 +69,8 @@ public class InspectionItem {
 
     @PrePersist
     protected void onCreate() {
-        if (status == null) {
-            status = "PENDENTE";
+        if (resultado == null) {
+            resultado = "PENDENTE";
         }
     }
 }

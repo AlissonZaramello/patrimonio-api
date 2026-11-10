@@ -56,7 +56,7 @@ public class Inspection {
     private User operador;
 
     @Column(name = "status", nullable = false, length = 20)
-    private String status = "PENDING";
+    private String status = "PENDENTE";
 
     @Column(name = "iniciada_em")
     private LocalDateTime iniciadaEm;

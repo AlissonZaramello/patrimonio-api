@@ -3,6 +3,7 @@ package com.patrimonio.api.repository;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,6 @@ public interface PatrimonyRepository extends JpaRepository<Patrimony, UUID> {
     List<Patrimony> findByRoom_IdIn(Collection<UUID> salaIds);
 
     List<Patrimony> findByRoom_IdInAndAtivoTrue(Collection<UUID> salaIds);
+
+    Optional<Patrimony> findByTagNfc_UuidTag(String uuidTag);
 }
