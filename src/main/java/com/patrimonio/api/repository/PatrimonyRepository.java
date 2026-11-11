@@ -18,4 +18,6 @@ public interface PatrimonyRepository extends JpaRepository<Patrimony, UUID> {
     List<Patrimony> findByRoom_IdInAndAtivoTrue(Collection<UUID> salaIds);
 
     Optional<Patrimony> findByTagNfc_UuidTag(String uuidTag);
+
+    boolean existsByNumeroTombo(String numeroTombo);
 }

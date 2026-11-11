@@ -13,10 +13,11 @@ import lombok.Data;
 public class UserResponseDTO {
 
     private UUID id;
-    private String name;
+    private String nome;
     private String email;
     private String role;
-    private LocalDateTime createdOn;
+    private boolean ativo;
+    private LocalDateTime criadoEm;
 
     public static UserResponseDTO fromEntity(User user){
         return new UserResponseDTO(
@@ -24,6 +25,7 @@ public class UserResponseDTO {
             user.getNome(),
             user.getEmail(),
             user.getRole(),
+            user.getAtivo(),
             user.getCriadoEm()
         );
     }
