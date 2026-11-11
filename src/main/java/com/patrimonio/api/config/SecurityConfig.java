@@ -75,6 +75,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
+                "https://localhost",
                 "http://localhost:5173",
                 "http://127.0.0.1:5173",
                 "https://sicpatrfid.up.railway.app"
