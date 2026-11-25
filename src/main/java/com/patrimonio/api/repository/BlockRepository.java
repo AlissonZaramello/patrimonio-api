@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface BlockRepository extends JpaRepository<Block, UUID> {
+
+    boolean existsByCodigoIgnoreCaseAndIdNot(String codigo, UUID id);
 }
