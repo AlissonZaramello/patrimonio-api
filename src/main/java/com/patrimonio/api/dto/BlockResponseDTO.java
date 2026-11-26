@@ -13,10 +13,11 @@ import lombok.Data;
 public class BlockResponseDTO {
 
     private UUID id;
-    private String code;
-    private String name;
-    private String description;
-    private LocalDateTime createdOn;
+    private String codigo;
+    private String nome;
+    private String descricao;
+    private Boolean ativo;
+    private LocalDateTime criadoEm;
 
     public static BlockResponseDTO fromEntity(Block block){
         return new BlockResponseDTO(
@@ -24,6 +25,7 @@ public class BlockResponseDTO {
             block.getCodigo(),
             block.getNome(),
             block.getDescricao(),
+            block.getAtivo(),
             block.getCriadoEm()
         );
     }

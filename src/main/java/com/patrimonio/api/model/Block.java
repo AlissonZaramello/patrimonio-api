@@ -30,6 +30,9 @@ public class Block {
     @Column
     private String descricao;
 
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,13 +46,7 @@ public class BlockController {
     @ResponseStatus(HttpStatus.CREATED)
     public BlockResponseDTO criar(@Valid @RequestBody BlockRequestDTO dados, Authentication autenticacao) {
 
-        boolean administrador = autenticacao.getAuthorities().stream()
-                .anyMatch(autoridade -> "ROLE_ADMIN".equals(autoridade.getAuthority()) || "ROLE_ADMINISTRADOR".equals(autoridade.getAuthority()));
-
-        if (!administrador) {
-
-            throw new AccessDeniedException("Somente administradores podem cadastrar blocos.");
-        }
+        validarAdministrador(autenticacao);
 
         return blockService.criar(dados);
     }
@@ -59,17 +54,37 @@ public class BlockController {
     @PutMapping("/{id}")
     public ResponseEntity<BlockResponseDTO> atualizar(@PathVariable UUID id, @Valid @RequestBody BlockRequestDTO dados, Authentication autenticacao) {
 
-        boolean administrador = autenticacao.getAuthorities().stream()
-                .anyMatch(autoridade -> "ROLE_ADMIN".equals(autoridade.getAuthority()) || "ROLE_ADMINISTRADOR".equals(autoridade.getAuthority()));
-
-        if (!administrador) {
-
-            throw new AccessDeniedException("Somente administradores podem editar blocos.");
-        }
+        validarAdministrador(autenticacao);
 
         return ResponseEntity.ok(blockService.atualizar(id, dados));
         
     }
 
+    @PatchMapping("/{id}/desativar")
+    public ResponseEntity<BlockResponseDTO> desativar(@PathVariable UUID id, Authentication autenticacao){
+        
+        validarAdministrador(autenticacao);
+
+        return ResponseEntity.ok(blockService.alterarSituacao(id, false));
+    }
+
+    @PatchMapping("/{id}/reativar")
+    public ResponseEntity<BlockResponseDTO> reativar(@PathVariable UUID id, Authentication autenticacao){
+
+        validarAdministrador(autenticacao);
+
+        return ResponseEntity.ok(blockService.alterarSituacao(id, true));
+    }
+
+    private void validarAdministrador(Authentication autenticacao) {
+
+        boolean administrador = autenticacao.getAuthorities().stream()
+                .anyMatch(autoridade -> "ROLE_ADMIN".equals(autoridade.getAuthority()) || "ROLE_ADMINISTRADOR".equals(autoridade.getAuthority()));
+
+        if (!administrador) {
+
+            throw new AccessDeniedException("Somente administradores podem gerenciar blocos");
+        }
+    }
 
 }

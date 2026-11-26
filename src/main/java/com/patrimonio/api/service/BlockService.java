@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.patrimonio.api.dto.BlockResponseDTO;
 import com.patrimonio.api.model.User;
 import com.patrimonio.api.repository.BlockRepository;
+import com.patrimonio.api.repository.RoomRepository;
 import com.patrimonio.api.repository.UserRepository;
 import com.patrimonio.api.dto.BlockRequestDTO;
 import com.patrimonio.api.model.Block;
@@ -25,7 +26,8 @@ public class BlockService {
 
     private final BlockRepository blockRepository;
     private final UserRepository userRepository;
-    private final AssignmentResponsibilityService assignmentService;    
+    private final AssignmentResponsibilityService assignmentService;
+    private final RoomRepository roomRepository;    
 
     @Transactional(readOnly = true) 
     public List<BlockResponseDTO> listAll(String email, boolean administrador){
@@ -37,7 +39,8 @@ public class BlockService {
 
         User usuario = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("Usuario autenticado não encontrado."));
 
-        return assignmentService.buscarBlocosDoUsuario(usuario.getId()).stream().map(BlockResponseDTO::fromEntity).toList();
+        return assignmentService.buscarBlocosDoUsuario(usuario.getId()).stream()
+                .filter(bloco -> Boolean.TRUE.equals(bloco.getAtivo())).map(BlockResponseDTO::fromEntity).toList();
 
     }
 
@@ -60,6 +63,7 @@ public class BlockService {
         bloco.setCodigo(codigo);
         bloco.setNome(nome);
         bloco.setDescricao(dados.descricao() == null ? null : dados.descricao().trim());
+        bloco.setAtivo(true);
         bloco.setCriadoEm(LocalDateTime.now());
 
         Block blocoSalvo = blockRepository.save(bloco);
@@ -93,5 +97,26 @@ public class BlockService {
         return BlockResponseDTO.fromEntity(blocoAtualizado);
     }
 
+    @Transactional 
+    public BlockResponseDTO alterarSituacao(UUID id, boolean ativo){
+
+        Block bloco = blockRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bloco não encontrado"));
+
+        if (Boolean.valueOf(ativo).equals(bloco.getAtivo())){
+
+            return BlockResponseDTO.fromEntity(bloco);
+        }
+        
+        if (!ativo && roomRepository.existsByBloco_Id(id)) {
+
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Não é possivel desativar um bloco que possui salas vinculadas.");
+        }
+
+        bloco.setAtivo(ativo);
+        Block blocoAtualizado = blockRepository.save(bloco);
+
+        return BlockResponseDTO.fromEntity(blocoAtualizado);
+    }
 
 }
